@@ -1,40 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Confirmación de Cita</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confirmación de Cita</title>
 
-    <meta property="og:title" content="✅ Confirmar Asistencia" />
-    <meta property="og:description" content="Haga clic para confirmar su cita. ¡Gracias!" />
-    <meta property="og:type" content="website" />
+  <!-- ✅ Open Graph metadata (for WhatsApp preview) -->
+  <meta property="og:title" content="✅ Confirmar Asistencia">
+  <meta property="og:description" content="Haga clic para confirmar su cita. ¡Gracias!">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://raw.githubusercontent.com/IATAPIA-UDA/whatsapp_buttons/refs/heads/main/assets/confirm_image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://iatapia-uda.github.io/whatsapp_buttons/confirmar">
 
-    <meta property="og:image" content="https://raw.githubusercontent.com/IATAPIA-UDA/whatsapp_button/main/assets/confirm_image.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+  <!-- Optional Twitter compatibility -->
+  <meta name="twitter:card" content="summary_large_image">
 
-    <script type="text/javascript">
-        function redirect() {
-            // Get the full query string from the current URL
-            var queryString = window.location.search;
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      text-align: center;
+      padding: 80px 20px;
+      background: #f9fafb;
+      color: #333;
+    }
+    h2 {
+      color: #00875a;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+  </style>
 
-            // Create a URLSearchParams object
-            var urlParams = new URLSearchParams(queryString);
+  <script>
+    // Automatically redirect after short delay (optional visual feedback)
+    function redirect() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const destinationUrl = urlParams.get('redirectUrl');
 
-            // Get the destination URL from the 'redirectUrl' parameter
-            var destinationUrl = urlParams.get('redirectUrl');
-
-            // If a destination URL is found, redirect the user
-            if (destinationUrl) {
-                window.location.href = destinationUrl;
-            } else {
-                // Optional: handle cases where no redirect URL is provided
-                document.body.innerHTML = "Error: URL de destino no especificada.";
-            }
-        }
-        // Call the redirect function when the page loads
-        window.onload = redirect;
-    </script>
+      if (destinationUrl) {
+        // Small delay for smoother UX / preview rendering
+        setTimeout(() => {
+          window.location.href = destinationUrl;
+        }, 1200);
+      } else {
+        document.body.innerHTML = `
+          <h2>Error</h2>
+          <p>URL de destino no especificada.</p>
+        `;
+      }
+    }
+    window.onload = redirect;
+  </script>
 </head>
+
 <body>
-    <p>Redirigiendo a la página de confirmación...</p>
+  <h2>Redirigiendo a la página de confirmación...</h2>
+  <p>Si no es redirigido automáticamente, <a id="manualLink" href="#">haga clic aquí</a>.</p>
+
+  <script>
+    // Update fallback link for manual click
+    const params = new URLSearchParams(window.location.search);
+    const redirectUrl = params.get('redirectUrl');
+    if (redirectUrl) {
+      document.getElementById('manualLink').href = redirectUrl;
+    }
+  </script>
 </body>
 </html>
+
